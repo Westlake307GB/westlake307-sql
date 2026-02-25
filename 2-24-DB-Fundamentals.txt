@@ -1,0 +1,37 @@
+Ordinality: Min. number of associations 0 or 1 
+Cardinality: Max. number of associations 1 or many
+
+a database is more susceptible to corruption during write/update events
+    redundant copies of same info. increases amount of time to perform updates (higher risk of issues and slower response time) 
+address through normalization
+
+1st normal form: table must have atomic values (all columns contain single, indivisible values) and no repeating groups or arrays
+2nd normal form: contains no partial dependencies 
+    solving the issue of redundancy that harm data integrity, performance, and maintainability
+
+-- Before (partial dependency: ProductName depends only on ProductID)
+CREATE TABLE OrderItems (
+  OrderID   INT,
+  ProductID INT,
+  Quantity  INT,
+  ProductName VARCHAR(200), -- depends only on ProductID (partial dependency)
+  PRIMARY KEY (OrderID, ProductID)
+);
+
+-- After (normalized: move product attributes out)
+CREATE TABLE OrderItems (
+  OrderID   INT,
+  ProductID INT,
+  Quantity  INT,
+  PRIMARY KEY (OrderID, ProductID),
+  FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+CREATE TABLE Products (
+  ProductID   INT PRIMARY KEY,
+  ProductName VARCHAR(200),
+  Price       DECIMAL(10,2)
+);
+
+denormalized data is controlled redundancy which is better for read-heavy workloads like analytics and AI allowing for faster
+data retrieval, news feeds, caching, indexing

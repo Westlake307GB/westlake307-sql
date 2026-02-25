@@ -1,0 +1,19 @@
+-- Show total inventory quantity grouped by brand name using inventories -> products -> brands --
+SELECT b.brand_name,
+       SUM(i.inv_stockquantity) AS total_stock
+FROM inventories i
+JOIN products p ON i.prod_id = p.prod_id
+JOIN brands b ON p.brand_id = b.brand_id
+GROUP BY b.brand_name
+ORDER BY total_stock DESC;
+
+-- Find users with more than 5 sessions using users and sessions tables. Show session count per user. --
+SELECT u.user_id,
+       u.user_username,
+       u.user_email,
+       COUNT(s.ses_token) AS session_count
+FROM users u
+JOIN sessions s ON u.user_id = s.user_id
+GROUP BY u.user_id, u.user_username, u.user_email
+HAVING COUNT(s.ses_token) > 5
+ORDER BY session_count DESC;
