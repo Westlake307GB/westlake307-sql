@@ -1,0 +1,25 @@
+Monolithic API: single DB for all data
+Microservice-basef API: breaks large API into smaller services (each manages its own data & can be written in a different
+language)
+
+REST architecture:
+    Client <-> Server using request -> Response communication
+    URI is a structured URL for an endpoint
+    Each exchange is stateless (no stored session data in the service)
+    caching of immutable payloads is possible
+    REST payloads: JSON, XML, HTML, YML, etc.
+
+    HTTP packet format: Verb, URI, Request Header, Request Body
+        Verbs: GET, POST, PUT, Patch, DELETE
+
+    API Versioning: 
+        API will need to evolve, existing apps will be dependent on payload and endpoint 
+        Solution: provide a version segment at the start of the URI (e.g. /api/1.1.5/warehouse/widgets)
+            when a new version is needed, semantic version number string is updated
+        
+API Frameworks:
+Synchronous: operations run in a strict sequence; each step waits for the previous to finish before starting.
+Asynchronous: operations can start and continue without waiting for prior operations to complete; results are handled later
+ (via callbacks, promises, events).
+
+ 

@@ -1,0 +1,38 @@
+OWASP INSECURE DESIGN
+what is it?
+A product designed to be implemented in a that doesn't take security in consideration leading to systemic risks
+
+How is it solved?
+Applying secure dsign patterns and threat modeling
+
+An example in relation to our DB?
+App uses one admin DB account, builds SQL directly from raw user input, and has no tenant isolation.
+
+One admin DB account → full access if compromised.
+Dynamic SQL from input → SQL injection risk.
+No tenant isolation → users/merchants can access each other’s data.
+
+Other general example:
+File uploads accepted without checks → validate type/size, store outside webroot, virus-scan.
+
+OWASP 10:
+Broken Access Control — flaws that allow users to act outside their intended permissions (e.g., privilege escalation, IDOR).
+
+Cryptographic Failures — improper protection of sensitive data due to weak or missing cryptography.
+
+Injection — untrusted input interpreted as code/commands (SQL, OS, LDAP, etc.).
+
+Insecure Design — missing or weak security controls in design and threat modeling.
+
+Security Misconfiguration — insecure default configs, incomplete setups, or exposed debug endpoints.
+
+Vulnerable and Outdated Components — use of libraries or services with known vulnerabilities.
+
+Identification and Authentication Failures — broken auth/session management enabling impersonation.
+
+Software and Data Integrity Failures — unsafe deserialization, unsigned updates, or CI/CD compromise.
+
+Security Logging and Monitoring Failures — inadequate detection and response capabilities for attacks.
+
+Server-Side Request Forgery (SSRF) — attacker makes the server-side app send requests to unintended locations.
+
