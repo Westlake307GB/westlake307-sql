@@ -1,0 +1,39 @@
+# FidZulu Auth Server Notes
+
+## What is a DTO?
+
+A Data Transfer Object (DTO) is an object that holds data without any business logic. It encapsulates data that needs to be transferred between different layers (for example, the service and client layers).
+
+## Oracle DB and JWT
+
+The Oracle database has stored procedures and functions that generate and validate JSON Web Tokens (JWTs). These JWTs are used for all secure interactions with backend APIs.
+
+## FidZulu Auth Server
+
+- Other FidZulu services do not need to know how to decrypt or validate JWTs; they delegate validation to the Auth Server.
+- The frontend never validates tokens directly — it only forwards them to backend services.
+- Server-side services use the JWT for session control but always call the Auth Server for validation to ensure consistency.
+
+### One-Time Use JWTs
+- Replay attacks are elminated because each JWT is invalidated after validation 
+- the Auth Server issues a fresh JWT every time keeping the session secure and traceable
+
+### UserID and Role Returned
+- Since other services don't parse JWTs themselves, Auth Server provides user_id and role explicitly 
+- keeps services stateless and focused on their own domain logic
+
+### Expiration Handling 
+<!-- Token TTL (Time To Live) is the validity period of an authentication token.
+    It defines how long a token remains valid before it expires.
+    Once expired, the token must be refreshed or a new one must be obtained.
+    By centralizing token expiration enforcement at the Auth Server,
+    other services can rely on the server to handle validity checks
+    rather than implementing duplicate expiration logic independently. -->
+- Auth Server enforces expiration so other services don't need to worry about token TTL (reduces dupliate logic)
+
+### Audit Trail
+- All JWTs are stored in the SESSIONS table using the JWT as the PK 
+- when a JWT is refreshed, the expiresAt column is set to now()
+
+
+
